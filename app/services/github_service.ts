@@ -13,6 +13,8 @@ export class GithubService {
       q: `is:pr is:open author:${user.login}`,
       sort: 'updated',
       order: 'desc',
+      per_page: 10,
+      page: 1,
     })
 
     return data.items.map((item) => ({
