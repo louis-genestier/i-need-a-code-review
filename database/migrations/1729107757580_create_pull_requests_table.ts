@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('title')
       table.string('url')
       table.string('repository_name')
+      table.string('description')
       table.integer('user_id').unsigned().references('users.id').onDelete('cascade')
       table.integer('language_id').unsigned().references('languages.id').onDelete('cascade')
 

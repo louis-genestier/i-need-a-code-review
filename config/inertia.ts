@@ -1,5 +1,7 @@
 import { defineConfig } from '@adonisjs/inertia'
-import type { InferSharedProps } from '@adonisjs/inertia/types'
+import type { InferSharedProps, SharedProps } from '@adonisjs/inertia/types'
+import type { HttpContext } from '@adonisjs/core/http'
+import User from '#models/user'
 
 const inertiaConfig = defineConfig({
   /**
@@ -11,7 +13,9 @@ const inertiaConfig = defineConfig({
    * Data that should be shared with all rendered pages
    */
   sharedData: {
-    errors: (ctx) => ctx.session?.flashMessages.get('errors'),
+    errors: (ctx: HttpContext) => ctx.session?.flashMessages.get('errors'),
+    success: (ctx: HttpContext) => ctx.session?.flashMessages.get('success'),
+    currentUser: (ctx: HttpContext) => ctx.auth?.user,
   },
 
   /**
@@ -26,5 +30,14 @@ const inertiaConfig = defineConfig({
 export default inertiaConfig
 
 declare module '@adonisjs/inertia/types' {
-  export interface SharedProps extends InferSharedProps<typeof inertiaConfig> {}
+  export interface SharedProps extends InferSharedProps<typeof inertiaConfig> {
+    [key: string]: any
+  }
+}
+
+export interface PageProps extends SharedProps {
+  currentUser: User | undefined
+  success: {
+    [key: string]: string[]
+  }
 }

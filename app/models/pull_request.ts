@@ -18,6 +18,9 @@ export default class PullRequest extends BaseModel {
   declare repositoryName: string
 
   @column()
+  declare description: string
+
+  @column()
   declare userId: number
 
   @column()

@@ -8,6 +8,7 @@ export default class HomeController {
 
     const pullRequests = await PullRequest.query()
       .preload('user')
+      .preload('language')
       .orderBy('createdAt', 'desc')
       .paginate(page, 10)
 
