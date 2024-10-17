@@ -23,7 +23,6 @@ export default function Home({
 
       <div>
         <h1>Homepage</h1>
-        <p>Welcome, {user?.username || 'Guest'}!</p>
         {user && (
           <div>
             <Link href="/pull-requests/create" method="get" as="button" type="button">
