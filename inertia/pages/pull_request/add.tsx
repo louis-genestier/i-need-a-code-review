@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import { Layout } from '../layout'
 import { ChevronDown } from 'lucide-react'
 
@@ -58,6 +58,7 @@ export default function AddPullRequestPage({
 
   return (
     <Layout>
+      <Head title="Add Pull Request" />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 className="text-3xl font-bold text-white mb-8">Add Pull Request</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
