@@ -10,6 +10,7 @@ export default class HomeController {
       .preload('user')
       .preload('language')
       .orderBy('createdAt', 'desc')
+      .where('created_at', '>', new Date(new Date().setMonth(new Date().getDay() - 7)))
       .paginate(page, 10)
 
     return inertia.render('home', { user, pullRequests: pullRequests })

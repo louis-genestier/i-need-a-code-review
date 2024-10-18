@@ -1,6 +1,7 @@
-import { PageProps } from '#config/inertia'
+import { PullRequestCard } from './card'
 import PullRequest from '#models/pull_request'
-import { usePage, router } from '@inertiajs/react'
+import { Pagination } from '../pagination'
+import { router } from '@inertiajs/react'
 
 interface PullRequestListingProps {
   pullRequests: PullRequest[]
@@ -13,34 +14,25 @@ export const PullRequestListing = ({
   currentPage,
   lastPage,
 }: PullRequestListingProps) => {
-  const { currentUser } = usePage<PageProps>().props
   return (
-    <div>
-      <h2>Pull Requests</h2>
-      {pullRequests.length === 0 && <p>No pull requests found for now</p>}
-      <div className="flex flex-col gap-4">
+    <div className="flex flex-col items-center">
+      {pullRequests.length === 0 && (
+        <p className="text-center text-gray-500 my-8">No pull requests found for now</p>
+      )}
+      <div className="flex flex-col items-center gap-4 w-full">
         {pullRequests.map((pr) => (
-          <div key={pr.id}>
-            <p>{pr.title}</p>
-            <p>{pr.language.displayName}</p>
-            {currentUser?.id === pr.user.id && (
-              <button
-                onClick={() => {
-                  router.delete(`/pull-requests/${pr.id}`, {
-                    onSuccess: () => {
-                      router.reload({ only: ['pullRequests'] })
-                    },
-                  })
-                }}
-              >
-                Delete
-              </button>
-            )}
-          </div>
+          <PullRequestCard key={pr.id} pullRequest={pr} />
         ))}
       </div>
-      <p>Current Page: {currentPage}</p>
-      <p>Last Page: {lastPage}</p>
+      <div className="flex justify-between items-center text-sm text-gray-500">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={lastPage}
+          onPageChange={(page) => {
+            router.get('/', { page }, { preserveState: true })
+          }}
+        />
+      </div>
     </div>
   )
 }
