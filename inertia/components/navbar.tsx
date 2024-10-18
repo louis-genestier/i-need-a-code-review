@@ -11,7 +11,7 @@ export const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-black bg-opacity-50 backdrop-blur-lg z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 xl:px-40 max-w-7xl">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="text-white text-xl font-semibold">
@@ -21,7 +21,7 @@ export const Navbar = () => {
           <div className="flex items-center">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none md:hidden"
             >
               {isMenuOpen ? (
                 <X className="h-6 w-6" aria-hidden="true" />
@@ -29,6 +29,30 @@ export const Navbar = () => {
                 <Menu className="h-6 w-6" aria-hidden="true" />
               )}
             </button>
+            <div className="hidden md:block">
+              {currentUser ? (
+                <Link
+                  href="/logout"
+                  method="post"
+                  as="button"
+                  type="button"
+                  className="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-900 border border-gray-800"
+                >
+                  <LogOut className="mr-3 h-5 w-5" aria-hidden="true" />
+                  Logout
+                </Link>
+              ) : (
+                <button
+                  onClick={() => {
+                    window.location.href = '/github/redirect'
+                  }}
+                  className="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-900 border border-gray-800"
+                >
+                  <Github className="mr-3 h-5 w-5" aria-hidden="true" />
+                  Login with Github
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

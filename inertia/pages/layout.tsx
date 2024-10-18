@@ -30,9 +30,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           },
         }}
       />
-      {/* {errors?.global && <p className="text-red-500">{errors.global}</p>}
-      {success?.global && <p className="text-green-500">{success.global}</p>} */}
-      <div className="px-4 pt-20">{children}</div>
+      <div className="px-4 pt-20 md:px-6 md:pt-24 lg:px-8 lg:pt-28 xl:px-40 max-w-7xl mx-auto">
+        {children}
+      </div>
     </div>
   )
 }
