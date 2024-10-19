@@ -22,7 +22,7 @@ export default function Home({
   return (
     <Layout>
       <Head title="Homepage" />
-      <div className="">
+      <div>
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-xl font-bold text-white">Latest Pull Requests</h2>
           <Link

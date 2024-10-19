@@ -2,7 +2,11 @@
 export default {
   content: ['./resources/**/*.edge', './inertia/**/*.tsx'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        satoshi: ['Satoshi-Variable', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

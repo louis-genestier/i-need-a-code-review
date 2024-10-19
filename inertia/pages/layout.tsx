@@ -16,7 +16,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   }, [errors, success])
 
   return (
-    <div>
+    <div className="font-satoshi">
       <Navbar />
       <Toaster
         position="top-center"
