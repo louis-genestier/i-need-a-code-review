@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany, beforeSave, afterFind } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import PullRequest from '#models/pull_request'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
+import encryption from '@adonisjs/core/services/encryption'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -26,6 +27,18 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column({ serializeAs: null })
   declare githubAccessToken: string
+
+  @beforeSave()
+  static async encryptAccessToken(user: User) {
+    if (user.$dirty.githubAccessToken) {
+      user.githubAccessToken = await encryption.encrypt(user.githubAccessToken)
+    }
+  }
+
+  @afterFind()
+  static async decryptAccessToken(user: User) {
+    user.githubAccessToken = (await encryption.decrypt(user.githubAccessToken)) as string
+  }
 
   @column()
   declare githubUsername: string
