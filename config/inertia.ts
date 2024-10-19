@@ -15,7 +15,14 @@ const inertiaConfig = defineConfig({
   sharedData: {
     errors: (ctx: HttpContext) => ctx.session?.flashMessages.get('errors'),
     success: (ctx: HttpContext) => ctx.session?.flashMessages.get('success'),
-    currentUser: (ctx: HttpContext) => ctx.auth?.user,
+    currentUser: (ctx: HttpContext) => {
+      const user = ctx.auth?.user
+      if (user) {
+        delete user.$attributes.githubAccessToken
+        return user
+      }
+      return undefined
+    },
   },
 
   /**
