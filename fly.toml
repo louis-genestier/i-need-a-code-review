@@ -1,0 +1,32 @@
+# fly.toml app configuration file generated for ineedacodereview on 2024-10-19T14:05:09+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'ineedacodereview'
+primary_region = 'cdg'
+
+[build]
+
+[http_service]
+internal_port = 8080
+force_https = true
+auto_stop_machines = 'stop'
+auto_start_machines = true
+min_machines_running = 0
+processes = ['app']
+
+[[vm]]
+memory = '1gb'
+cpu_kind = 'shared'
+cpus = 1
+
+[env]
+TZ = 'UTC'
+PORT = '8080'
+HOST = '0.0.0.0'
+LOG_LEVEL = 'info'
+NODE_ENV = 'production'
+SESSION_DRIVER = 'cookie'
+LIMITER_STORE = 'database'
+GITHUB_CALLBACK_URL = 'https://ineedacodereview.fly.dev/github/callback'
